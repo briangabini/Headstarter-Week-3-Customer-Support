@@ -11,7 +11,7 @@ The AI Customer Support Chatbot is developed to automate customer service intera
 - **Next.js**: A React framework for building server-side rendered applications.
 - **OpenAI API**: Provides the natural language processing capabilities.
 - **JavaScript**: Core programming language used for development.
-- **HTML & CSS**: Used for the front-end structure and styling.- 
+- **HTML & CSS**: Used for the front-end structure and styling.-
 ## Contributors
 - Bom Bahadur Thapa - bombahadurthapa30@gmail.com
 - Brian Gabini - briangabini@gmail.com
