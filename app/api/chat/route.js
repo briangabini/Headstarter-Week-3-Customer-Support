@@ -36,21 +36,31 @@ export async function POST(req) {
         })
         .filter((item) => item !== null);
 
-    const completion = await groq.chat.completions.create({
-        messages: [
-            {
-                role: "assistant",
-                content: systemPrompt,
-            },
-            ...transformedData,
-        ],
-        model: "llama3-70b-8192",
-        temperature: 1,
-        max_tokens: 1024,
-        top_p: 1,
-        stream: true,
-        stop: null,
-    });
+    const completion = await groq.chat.completions
+        .create({
+            messages: [
+                {
+                    role: "assistant",
+                    content: systemPrompt,
+                },
+                ...transformedData,
+            ],
+            model: "llama3-70b-8192",
+            temperature: 1,
+            max_tokens: 1024,
+            top_p: 1,
+            stream: true,
+            stop: null,
+        })
+        .catch(async (err) => {
+            if (err instanceof Groq.APIError) {
+                console.log(err.status); // 400
+                console.log(err.name); // BadRequestError
+                console.log(err.headers); // {server: 'nginx', ...}
+            } else {
+                throw err;
+            }
+        });
 
     const stream = new ReadableStream({
         async start(controller) {
