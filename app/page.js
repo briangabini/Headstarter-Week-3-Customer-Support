@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react';
 import { Box, IconButton, Stack, TextField, Typography, Paper } from '@mui/material';
-import { FaPaperPlane } from 'react-icons/fa';
+import { LuSendHorizonal } from "react-icons/lu";
 
 export default function Home() {
   const [messages, setMessages] = useState([{
@@ -62,7 +62,7 @@ export default function Home() {
       alignItems="center"
       bgcolor="#1c1c28" 
     >
-      <Paper elevation={5} sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', p: 3, borderRadius: 4 }}>
+      <Paper elevation={5} sx={{ width:"70%", minWidth:"350px", height: '100%', display: 'flex', flexDirection: 'column', p: 3, borderRadius: 3 }}>
         <Typography variant="h5" align="center" gutterBottom sx={{ color: '#000000'}}>
         <strong>Headstarter AI Support</strong>
         </Typography>
@@ -93,7 +93,8 @@ export default function Home() {
         <Stack direction="row" spacing={2} mt={2}>
         <TextField
             label={<Typography sx={{ color: 'white' }}>Type your message...</Typography>}
-            variant="outlined"
+            variant="filled"
+            margin="dense"
             fullWidth
             value={message}
             onChange={(e) => setMessage(e.target.value)}
@@ -106,7 +107,7 @@ export default function Home() {
             }}
           />
           <IconButton color="primary" onClick={sendMessage}>
-            <FaPaperPlane size={24} />
+            <LuSendHorizonal size={24} />
           </IconButton>
         </Stack>
       </Paper>
