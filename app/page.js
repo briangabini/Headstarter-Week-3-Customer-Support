@@ -64,7 +64,7 @@ export default function Home() {
     >
       <Paper elevation={5} sx={{ width:"70%", minWidth:"350px", height: '100%', display: 'flex', flexDirection: 'column', p: 3, borderRadius: 3 }}>
         <Typography variant="h5" align="center" gutterBottom sx={{ color: '#000000'}}>
-        <strong>Headstarter AI Support</strong>
+        <strong>AI Customer Support</strong>
         </Typography>
         <Stack spacing={2} sx={{ flexGrow: 1, overflowY: 'auto', padding: '10px', bgcolor: '#2a2a40', borderRadius: 2 }}>
           {messages.map((message, index) => (
