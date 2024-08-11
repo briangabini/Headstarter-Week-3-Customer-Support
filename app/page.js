@@ -62,7 +62,7 @@ export default function Home() {
       alignItems="center"
       bgcolor="#1c1c28" 
     >
-      <Paper elevation={5} sx={{ width: '700px', height: '800px', display: 'flex', flexDirection: 'column', p: 3, borderRadius: 4 }}>
+      <Paper elevation={5} sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', p: 3, borderRadius: 4 }}>
         <Typography variant="h5" align="center" gutterBottom sx={{ color: '#000000'}}>
         <strong>Headstarter AI Support</strong>
         </Typography>
