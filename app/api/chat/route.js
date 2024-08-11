@@ -1,5 +1,6 @@
-import { NextResponse } from 'next/server';
-import OpenAI from 'openai';
+import { NextResponse } from "next/server";
+import OpenAI from "openai";
+import Groq from "groq-sdk";
 
 const systemPrompt = `
 You are a customer support chatbot for HeadstarterAI, a platform that conducts AI-powered interviews for software engineering (SWE) jobs. Your role is to assist users with their queries about the platform, including how to use it, troubleshooting issues, and providing information about the features and benefits of HeadstarterAI.
@@ -20,20 +21,46 @@ Remember, your goal is to enhance the user experience by providing efficient and
 `;
 
 export async function POST(req) {
-    const openai = new OpenAI();
+    const groq = new Groq({
+        apiKey: process.env.API_KEY,
+    });
     const data = await req.json();
 
-    const completion = await openai.chat.completions.create({
-        messages: [
-            {
-                role: "system",
-                content: systemPrompt
-            },
-            ...data,
-        ],
-        model: 'gpt-4',
-        stream: true
-    });
+    const transformedData = data
+        .map((item) => {
+            if (typeof item === "object") {
+                return item;
+            } else {
+                return null;
+            }
+        })
+        .filter((item) => item !== null);
+
+    const completion = await groq.chat.completions
+        .create({
+            messages: [
+                {
+                    role: "assistant",
+                    content: systemPrompt,
+                },
+                ...transformedData,
+            ],
+            model: "llama3-70b-8192",
+            temperature: 1,
+            max_tokens: 1024,
+            top_p: 1,
+            stream: true,
+            stop: null,
+        })
+        .catch(async (err) => {
+            if (err instanceof Groq.APIError) {
+                console.log(err.status); // 400
+                console.log(err.name); // BadRequestError
+                console.log(err.headers); // {server: 'nginx', ...}
+            } else {
+                throw err;
+            }
+        });
 
     const stream = new ReadableStream({
         async start(controller) {
@@ -51,8 +78,8 @@ export async function POST(req) {
             } finally {
                 controller.close();
             }
-        }
-    })
+        },
+    });
 
     return new NextResponse(stream);
 }
